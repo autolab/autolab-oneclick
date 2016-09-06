@@ -1,0 +1,28 @@
+db:
+  image: mysql
+  ports:
+    - '3306'
+  environment:
+    MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+  volumes:
+    - ./Autolab/docker/mysql:/etc/mysql/conf.d
+    - ./db-data:/var/lib/mysql
+
+tango:
+  build: ./Tango
+  command: sh start.sh
+  ports:
+    - '8600:8600'
+  privileged: true
+
+
+web:
+  build: ./Autolab
+  links:
+    - db
+    - tango
+  ports:
+    - '80:80'
+    - '443:443'
+  volumes:
+    - ./Autolab/courses:/home/app/webapp/courses
