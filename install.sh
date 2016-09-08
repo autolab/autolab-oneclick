@@ -42,9 +42,14 @@ set -o errtrace
 set -o errexit
 
 # Email and signup link are Base64-coded to prevent scraping
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+OUR_EMAIL=`echo -n 'YXV0b2xhYi1kZXZAYW5kcmV3LmNtdS5lZHU=' | base64 -D`
+LIST_SIGNUP=`echo -n 'aHR0cDovL2VlcHVybC5jb20vYlRUT2lU' | base64 -D`
+else
 OUR_EMAIL=`echo -n 'YXV0b2xhYi1kZXZAYW5kcmV3LmNtdS5lZHU=' | base64 -d`
 LIST_SIGNUP=`echo -n 'aHR0cDovL2VlcHVybC5jb20vYlRUT2lU' | base64 -d`
-
+fi
 SCRIPT_PATH="${BASH_SOURCE[0]}";
 
 # Colorful output
@@ -106,14 +111,19 @@ trap 'err_report $LINENO' ERR
 
 environment_setup() {
   log "[1/6] Installing docker and docker-compose"
-  sudo apt-get -y update
-  #install relative packages
-  sudo apt-get install -y vim git curl python-pip
-  #install docker
-  curl -sSL https://get.docker.com/ | sh
-  #install docker-compose
-  pip install docker-compose
-  log "[1/6] Done"
+
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    command -v docker ps >/dev/null 2>&1 || { echo "Autolab on OS X requires Docker. Please install it from https://docs.docker.com/engine/installation/mac/ Aborting." >&2; exit 1; }
+  else
+    sudo apt-get -y update
+    #install relative packages
+    sudo apt-get install -y vim git curl python-pip
+    #install docker
+    curl -sSL https://get.docker.com/ | sh
+    #install docker-compose
+    pip install docker-compose
+    log "[1/6] Done"
+  fi
 }
 
 source_file_download() {
