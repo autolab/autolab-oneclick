@@ -1,0 +1,4 @@
+# Ignore local installations
+local/Autolab
+local/Tango
+local/db-data

@@ -162,6 +162,8 @@ make_volumes() {
 
   mkdir ./Autolab/courses
   sudo chown -R 9999:9999 Autolab/courses
+  # create attachements folder
+  mkdir ./Autolab/attachments
   log "[4/6] Done"
 }
 
