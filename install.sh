@@ -152,6 +152,7 @@ copy_config() {
   cp ./configs/devise.rb ./Autolab/config/initializers/devise.rb
   cp ./configs/nginx.conf ./Autolab/docker/nginx.conf
   cp ./configs/production.rb ./Autolab/config/environments/production.rb
+  cp ./Autolab/config/school.yml.template ./Autolab/config/school.yml
 
   log "[3/6] Done"
 }
