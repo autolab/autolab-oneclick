@@ -45,7 +45,7 @@ RUN make && make install
 WORKDIR /opt/TangoService/Tango/
 
 # Install Docker from Docker Inc. repositories.
-RUN curl -sSL https://get.docker.com/ | sh
+# RUN curl -sSL https://get.docker.com/ | sh
 
 # Install the magic wrapper.
 ADD ./wrapdocker /usr/local/bin/wrapdocker
