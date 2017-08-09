@@ -132,7 +132,8 @@ environment_setup() {
    $(lsb_release -cs) \
    stable"
    sudo apt-get update
-   sudo apt-get install docker-ce
+   sudo apt-get install docker-ce || true
+   service docker start
 
     #install docker-compose
     pip install docker-compose
