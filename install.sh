@@ -109,6 +109,12 @@ trap 'err_report $LINENO' ERR
 ## Setup Task Specifications
 ############################################
 
+old_cleanup() {
+  log "[0/6] Cleaning up old installation files"
+  sudo rm -rf ./Autolab
+  sudo rm -rf ./Tango
+}
+
 environment_setup() {
   log "[1/6] Installing docker and docker-compose"
 
@@ -204,6 +210,7 @@ congrats() {
 ## Main Entry Point
 #########################################################
 cd $OPTION
+old_cleanup
 environment_setup
 source_file_download
 copy_config
